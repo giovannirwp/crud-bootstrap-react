@@ -1,12 +1,12 @@
 import React from "react";
 import NavBar from "./Components/NavBar";
-import Home from "./Views/Home";
+import Rotas from "./Views/Rotas";
 
 function App() {
   return (
     <div className="container">
       <NavBar />
-      <Home />
+      <Rotas />
     </div>
   );
 }
