@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 
+const estadoInicial = {
+  nome: "",
+  sku: "",
+  descricao: "",
+  preco: 0,
+  fornecedor: "",
+}
 class CadastroProduto extends Component {
-  state = {
-    nome: "",
-    sku: "",
-    descricao: "",
-    preco: 0,
-    fornecedor: "",
-  };
+  state = estadoInicial;
 
   handleChange = ({ target }) => {
     // const valor = target.value;
@@ -19,6 +20,10 @@ class CadastroProduto extends Component {
 
   onSumbmit = (event) => {
     console.log(this.state);
+  }
+
+  clearInputs = () => {
+    this.setState(estadoInicial);
   }
 
   render() {
@@ -91,7 +96,7 @@ class CadastroProduto extends Component {
             </div>
 
             <div className="col-md-1">
-              <button className="btn btn-primary">Limpar</button>
+              <button className="btn btn-primary" onClick={this.clearInputs}>Limpar</button>
             </div>
           </div>
         </div>
