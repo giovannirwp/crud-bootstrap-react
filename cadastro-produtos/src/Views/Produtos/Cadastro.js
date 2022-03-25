@@ -92,7 +92,7 @@ class CadastroProduto extends Component {
 
           <div className="row">
             <div className="col-md-1">
-              <button className="btn btn-success" onClick={this.onSumbmit}>Salvar teste</button>
+              <button className="btn btn-success" onClick={this.onSumbmit}>Salvar</button>
             </div>
 
             <div className="col-md-1">
