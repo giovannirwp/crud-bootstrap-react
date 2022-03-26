@@ -7,6 +7,7 @@ const estadoInicial = {
   descricao: "",
   preco: 0,
   fornecedor: "",
+  success: false,
 };
 class CadastroProduto extends Component {
   state = estadoInicial;
@@ -34,7 +35,7 @@ class CadastroProduto extends Component {
     };
     this.service.salvar(produto);
     this.clearInputs();
-    console.log(produto);
+    this.setState({ success: true })
   };
 
   clearInputs = () => {
@@ -47,6 +48,23 @@ class CadastroProduto extends Component {
       <div className="card">
         <div className="card-header">Cardastro de produto</div>
         <div className="card-body">
+          {
+            this.state.success && 
+            (
+              <div className="alert alert-dismissible alert-success">
+              <button
+                type="button"
+                className="btn-close"
+                data-bs-dismiss="alert"
+              ></button>
+              <strong>Bem feito!</strong>
+              <a href="#" className="alert-link">
+                Cadastro realizado com sucesso!
+              </a>
+              .
+            </div>
+            )
+          }
           <div className="row mt-3">
             <div className="col-md-6">
               <label>Nome: *</label>
