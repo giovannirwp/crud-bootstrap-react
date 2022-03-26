@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import produtoService from "../../app/produtoService";
 
 const estadoInicial = {
   nome: "",
@@ -6,9 +7,14 @@ const estadoInicial = {
   descricao: "",
   preco: 0,
   fornecedor: "",
-}
+};
 class CadastroProduto extends Component {
   state = estadoInicial;
+
+  constructor() {
+    super();
+    this.service = new produtoService();
+  }
 
   handleChange = ({ target }) => {
     // const valor = target.value;
@@ -19,12 +25,21 @@ class CadastroProduto extends Component {
   };
 
   onSumbmit = (event) => {
-    console.log(this.state);
-  }
+    const produto = {
+      nome: this.state.nome,
+      sku: this.state.sku,
+      descricao: this.state.descricao,
+      preco: this.state.preco,
+      fornecedor: this.state.fornecedor,
+    };
+    this.service.salvar(produto);
+    this.clearInputs();
+    console.log(produto);
+  };
 
   clearInputs = () => {
     this.setState(estadoInicial);
-  }
+  };
 
   render() {
     const { nome, sku, descricao, preco, fornecedor } = this.state;
@@ -92,11 +107,15 @@ class CadastroProduto extends Component {
 
           <div className="row">
             <div className="col-md-1">
-              <button className="btn btn-success" onClick={this.onSumbmit}>Salvar</button>
+              <button className="btn btn-success" onClick={this.onSumbmit}>
+                Salvar
+              </button>
             </div>
 
             <div className="col-md-1">
-              <button className="btn btn-primary" onClick={this.clearInputs}>Limpar</button>
+              <button className="btn btn-primary" onClick={this.clearInputs}>
+                Limpar
+              </button>
             </div>
           </div>
         </div>
