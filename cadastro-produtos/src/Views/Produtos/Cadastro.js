@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import produtoService from "../../app/produtoService";
+import Message from "../../Components/Message";
 
 const estadoInicial = {
   nome: "",
@@ -26,12 +27,13 @@ class CadastroProduto extends Component {
   };
 
   onSumbmit = (event) => {
+    const { nome, sku, descricao, preco, fornecedor } = this.state;
     const produto = {
-      nome: this.state.nome,
-      sku: this.state.sku,
-      descricao: this.state.descricao,
-      preco: this.state.preco,
-      fornecedor: this.state.fornecedor,
+      nome: nome,
+      sku: sku,
+      descricao: descricao,
+      preco: preco,
+      fornecedor: fornecedor,
     };
     this.service.salvar(produto);
     this.clearInputs();
@@ -51,18 +53,7 @@ class CadastroProduto extends Component {
           {
             this.state.success && 
             (
-              <div className="alert alert-dismissible alert-success">
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="alert"
-              ></button>
-              <strong>Bem feito!</strong>
-              <a href="#" className="alert-link">
-                Cadastro realizado com sucesso!
-              </a>
-              .
-            </div>
+              <Message />
             )
           }
           <div className="row mt-3">
