@@ -9,6 +9,7 @@ const estadoInicial = {
   preco: 0,
   fornecedor: "",
   success: false,
+  errors: []
 };
 class CadastroProduto extends Component {
   state = estadoInicial;
@@ -34,10 +35,16 @@ class CadastroProduto extends Component {
       descricao: descricao,
       preco: preco,
       fornecedor: fornecedor,
-    };
-    this.service.salvar(produto);
-    this.clearInputs();
-    this.setState({ success: true })
+    }
+    try {
+      this.service.salvar(produto);
+      this.clearInputs();
+      this.setState({ success: true })
+    }catch(erro) {
+      console.log(erro)
+      const errors = erro.errors
+      this.setState({errors: errors})
+    }
   };
 
   clearInputs = () => {
@@ -55,6 +62,24 @@ class CadastroProduto extends Component {
             (
               <Message />
             )
+          }
+          {
+            this.state.errors.length > 0 &&
+              
+              this.state.errors.map(msg => {
+                return (
+                  <div className="alert alert-dismissible alert-danger">
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="alert"
+                    ></button>
+                    <strong> Erro!</strong>{msg}
+                  </div>
+                )
+              })
+
+            
           }
           <div className="row mt-3">
             <div className="col-md-6">
