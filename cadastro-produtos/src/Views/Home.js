@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Home(props) {
   return (
@@ -13,9 +14,9 @@ function Home(props) {
         within the larger container.
       </p>
       <p className="lead">
-        <a className="btn btn-primary btn-lg" href="#" role="button">
+        <Link className="btn btn-primary btn-lg" to="/cadastro-produtos" role="button">
           Cadastrar
-        </a>
+        </Link>
       </p>
     </div>
   );
