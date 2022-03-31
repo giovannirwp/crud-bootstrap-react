@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import produtoService from "../../app/produtoService";
 import Message from "../../Components/Message";
+import { withRouter } from "react-router-dom";
 
 const estadoInicial = {
   nome: "",
@@ -9,7 +10,7 @@ const estadoInicial = {
   preco: 0,
   fornecedor: "",
   success: false,
-  errors: []
+  errors: [],
 };
 class CadastroProduto extends Component {
   state = estadoInicial;
@@ -35,15 +36,15 @@ class CadastroProduto extends Component {
       descricao: descricao,
       preco: preco,
       fornecedor: fornecedor,
-    }
+    };
     try {
       this.service.salvar(produto);
       this.clearInputs();
-      this.setState({ success: true })
-    }catch(erro) {
-      console.log(erro)
-      const errors = erro.errors
-      this.setState({errors: errors})
+      this.setState({ success: true });
+    } catch (erro) {
+      console.log(erro);
+      const errors = erro.errors;
+      this.setState({ errors: errors });
     }
   };
 
@@ -51,36 +52,44 @@ class CadastroProduto extends Component {
     this.setState(estadoInicial);
   };
 
+  componentDidMount() {
+    const sku = this.props.match.params.sku
+
+    if (sku) {
+      const resultado = this
+        .service
+        .obterProdutos()
+        .filter(produto => produto.sku === sku)
+
+        console.log(resultado)
+      if (resultado.length === 1) {
+       const produtoEncontrado = resultado[0];
+       this.setState({ ...produtoEncontrado })
+      }
+    }
+  }
+
   render() {
     const { nome, sku, descricao, preco, fornecedor } = this.state;
     return (
       <div className="card">
         <div className="card-header">Cardastro de produto</div>
         <div className="card-body">
-          {
-            this.state.success && 
-            (
-              <Message />
-            )
-          }
-          {
-            this.state.errors.length > 0 &&
-              
-              this.state.errors.map(msg => {
-                return (
-                  <div className="alert alert-dismissible alert-danger">
-                    <button
-                      type="button"
-                      className="btn-close"
-                      data-bs-dismiss="alert"
-                    ></button>
-                    <strong> Erro!</strong>{msg}
-                  </div>
-                )
-              })
-
-            
-          }
+          {this.state.success && <Message />}
+          {this.state.errors.length > 0 &&
+            this.state.errors.map((msg) => {
+              return (
+                <div className="alert alert-dismissible alert-danger">
+                  <button
+                    type="button"
+                    className="btn-close"
+                    data-bs-dismiss="alert"
+                  ></button>
+                  <strong> Erro!</strong>
+                  {msg}
+                </div>
+              );
+            })}
           <div className="row mt-3">
             <div className="col-md-6">
               <label>Nome: *</label>
@@ -158,4 +167,4 @@ class CadastroProduto extends Component {
   }
 }
 
-export default CadastroProduto;
+export default withRouter(CadastroProduto);

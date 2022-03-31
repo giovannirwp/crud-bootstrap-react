@@ -9,7 +9,7 @@ import Consulta from "./Produtos/Consulta";
 export default () => {
   return (
     <Switch>
-      <Route exact path="/cadastro-produtos" component={CadastroProduto} />
+      <Route exact path="/cadastro-produtos/:sku?" component={CadastroProduto} />
       <Route exact path="/consulta-produtos" component={Consulta} />
       <Route exact path="/" component={Home} />
 

@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import produtoService from "../../app/produtoService";
+import { withRouter } from 'react-router-dom';
 
-export default class Consulta extends Component {
+class Consulta extends Component {
   state = {
     produtos: [],
   };
@@ -16,12 +17,15 @@ export default class Consulta extends Component {
     this.setState({ produtos });
   }
 
+  preparaEditar = (sku) => {
+    console.log('sku para editar: ',sku)
+    this.props.history.push(`/cadastro-produtos/${sku}`);
+  }
+
   render() {
     return (
       <div className="card">
-        <div className="card-header">
-          Consulta Produtos
-        </div>
+        <div className="card-header">Consulta Produtos</div>
         <div className="card-body">
           <table className="table table-hover">
             <thead>
@@ -42,7 +46,10 @@ export default class Consulta extends Component {
                     <td>{produto.sku}</td>
                     <td>{produto.preco}</td>
                     <td>{produto.fornecedor}</td>
-                    <td></td>
+                    <td>
+                      <button onClick={ () => this.preparaEditar(produto.sku)} className="btn btn-primary">Editar</button>
+                      <button className="btn btn-danger">Remover</button>
+                    </td>
                   </tr>
                 );
               })}
@@ -53,3 +60,5 @@ export default class Consulta extends Component {
     );
   }
 }
+
+export default withRouter(Consulta);
