@@ -11,6 +11,7 @@ const estadoInicial = {
   fornecedor: "",
   success: false,
   errors: [],
+  atualizando: false,
 };
 class CadastroProduto extends Component {
   state = estadoInicial;
@@ -53,18 +54,17 @@ class CadastroProduto extends Component {
   };
 
   componentDidMount() {
-    const sku = this.props.match.params.sku
+    const sku = this.props.match.params.sku;
 
     if (sku) {
-      const resultado = this
-        .service
+      const resultado = this.service
         .obterProdutos()
-        .filter(produto => produto.sku === sku)
+        .filter((produto) => produto.sku === sku);
 
-        console.log(resultado)
+      console.log(resultado);
       if (resultado.length === 1) {
-       const produtoEncontrado = resultado[0];
-       this.setState({ ...produtoEncontrado })
+        const produtoEncontrado = resultado[0];
+        this.setState({ ...produtoEncontrado, atualizando: true });
       }
     }
   }
@@ -73,9 +73,14 @@ class CadastroProduto extends Component {
     const { nome, sku, descricao, preco, fornecedor } = this.state;
     return (
       <div className="card">
-        <div className="card-header">Cardastro de produto</div>
+        <div className="card-header">
+          {this.state.atualizando ? "Atualização" : "Cadastro"}
+          de produto
+        </div>
         <div className="card-body">
-          {this.state.success && <Message />}
+          {this.state.success && (
+            <Message />
+          )}
           {this.state.errors.length > 0 &&
             this.state.errors.map((msg) => {
               return (
@@ -106,6 +111,7 @@ class CadastroProduto extends Component {
               <input
                 type="text"
                 name="sku"
+                disabled={this.state.atualizando}
                 value={sku}
                 onChange={this.handleChange}
                 className="form-control"
@@ -151,7 +157,7 @@ class CadastroProduto extends Component {
           <div className="row">
             <div className="col-md-1">
               <button className="btn btn-success" onClick={this.onSumbmit}>
-                Salvar
+                {this.state.atualizando ? "Atualizar" : "Salvar"}
               </button>
             </div>
 
