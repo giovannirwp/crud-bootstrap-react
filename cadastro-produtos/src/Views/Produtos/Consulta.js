@@ -61,7 +61,7 @@ class Consulta extends Component {
                       onClick={() => this.delete(produto.sku)}
                       className="btn btn-danger"
                     >
-                      Remover
+                      Remover d
                     </button>
                   </td>
                 </tr>
