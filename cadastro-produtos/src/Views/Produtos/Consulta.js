@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import produtoService from "../../app/produtoService";
 import { withRouter } from "react-router-dom";
 import Card from "../../Components/Card";
+import ProdutosTable from "./ProdutosTable";
 
 class Consulta extends Component {
   state = {
@@ -31,44 +32,11 @@ class Consulta extends Component {
   render() {
     return (
       <Card header="Consulta Produtos">
-        <table className="table table-hover">
-          <thead>
-            <tr>
-              <th scope="col">Nome</th>
-              <th scope="col">Sku</th>
-              <th scope="col">Preço</th>
-              <th scope="col">Fornecedor</th>
-              <th scope="col"></th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {this.state.produtos.map((produto, index) => {
-              return (
-                <tr key={index}>
-                  <td>{produto.nome}</td>
-                  <td>{produto.sku}</td>
-                  <td>{produto.preco}</td>
-                  <td>{produto.fornecedor}</td>
-                  <td>
-                    <button
-                      onClick={() => this.preparaEditar(produto.sku)}
-                      className="btn btn-primary"
-                    >
-                      Editar
-                    </button>
-                    <button
-                      onClick={() => this.delete(produto.sku)}
-                      className="btn btn-danger"
-                    >
-                      Remover
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+        <ProdutosTable
+          produtos={this.state.produtos}
+          editarAction={this.preparaEditar}
+          deletarAction={this.delete}
+        />
       </Card>
     );
   }
